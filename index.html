@@ -3,49 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aktiekurs Historik & Beräkning</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- För att skapa grafer -->
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            padding: 20px;
-        }
-        canvas {
-            max-width: 100%;
-        }
-        input, button {
-            padding: 10px;
-            margin: 10px;
-            font-size: 16px;
-        }
-        .result {
-            font-weight: bold;
-            margin-top: 20px;
-        }
-    </style>
+    <title>Aktieberäkning</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <h1>Aktiekurs Historik & Beräkning</h1>
+    <h1>Aktieberäkning</h1>
 
-    <h3>Aktiekurs för åren 2021 till 2024:</h3>
-    <canvas id="stockChart"></canvas>
+    <label for="purchases2021">Köp 2021 (antal aktier):</label>
+    <input type="number" id="purchases2021" placeholder="Antal aktier 2021">
+    
+    <label for="purchases2022">Köp 2022 (antal aktier):</label>
+    <input type="number" id="purchases2022" placeholder="Antal aktier 2022">
+    
+    <label for="purchases2023">Köp 2023 (antal aktier):</label>
+    <input type="number" id="purchases2023" placeholder="Antal aktier 2023">
+    
+    <label for="purchases2024">Köp 2024 (antal aktier):</label>
+    <input type="number" id="purchases2024" placeholder="Antal aktier 2024">
 
-    <div>
-        <h3>Beräkna Investering & Vinst</h3>
-        <label for="purchases2021">Köp 2021 (antal aktier):</label>
-        <input type="number" id="purchases2021" value="0">
-        <label for="purchases2022">Köp 2022 (antal aktier):</label>
-        <input type="number" id="purchases2022" value="0">
-        <label for="purchases2023">Köp 2023 (antal aktier):</label>
-        <input type="number" id="purchases2023" value="0">
-        <label for="purchases2024">Köp 2024 (antal aktier):</label>
-        <input type="number" id="purchases2024" value="0">
-        <button onclick="calculateInvestment()">Beräkna Totalt Investering och Vinst</button>
+    <button onclick="calculateInvestment()">Beräkna Totalt Investering och Vinst</button>
+
+    <div id="investmentResult">
+        <!-- Resultatet av beräkningen kommer att visas här -->
     </div>
 
-    <div class="result" id="investmentResult"></div>
+    <h2>Graf för aktiekurs (2021–2024)</h2>
+    <canvas id="stockChart" width="400" height="200"></canvas>
+
+    <h2>Graf för vinst (2021–2024)</h2>
+    <canvas id="profitChart" width="400" height="200"></canvas>
 
     <script src="app.js"></script>
 </body>
