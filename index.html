@@ -11,17 +11,25 @@
 
     <h1>Aktieberäkning</h1>
 
-    <label for="purchases2021">Köp 2021 (antal aktier):</label>
-    <input type="number" id="purchases2021" placeholder="Antal aktier 2021">
-    
-    <label for="purchases2022">Köp 2022 (antal aktier):</label>
-    <input type="number" id="purchases2022" placeholder="Antal aktier 2022">
-    
-    <label for="purchases2023">Köp 2023 (antal aktier):</label>
-    <input type="number" id="purchases2023" placeholder="Antal aktier 2023">
-    
-    <label for="purchases2024">Köp 2024 (antal aktier):</label>
-    <input type="number" id="purchases2024" placeholder="Antal aktier 2024">
+    <div>
+        <label for="purchases2021">Köp 2021 (antal aktier):</label>
+        <input type="number" id="purchases2021" placeholder="Antal aktier 2021">
+    </div>
+
+    <div>
+        <label for="purchases2022">Köp 2022 (antal aktier):</label>
+        <input type="number" id="purchases2022" placeholder="Antal aktier 2022">
+    </div>
+
+    <div>
+        <label for="purchases2023">Köp 2023 (antal aktier):</label>
+        <input type="number" id="purchases2023" placeholder="Antal aktier 2023">
+    </div>
+
+    <div>
+        <label for="purchases2024">Köp 2024 (antal aktier):</label>
+        <input type="number" id="purchases2024" placeholder="Antal aktier 2024">
+    </div>
 
     <button onclick="calculateInvestment()">Beräkna Totalt Investering och Vinst</button>
 
@@ -35,6 +43,92 @@
     <h2>Graf för vinst (2021–2024)</h2>
     <canvas id="profitChart" width="400" height="200"></canvas>
 
-    <script src="app.js"></script>
+    <script>
+        // Prisdata för åren
+        const prices = {
+            2021: 2945,
+            2022: 3600,
+            2023: 5290,
+            2024: 9103
+        };
+
+        // Funktion för att beräkna investering och vinst
+        function calculateInvestment() {
+            const purchases2021 = parseInt(document.getElementById("purchases2021").value) || 0;
+            const purchases2022 = parseInt(document.getElementById("purchases2022").value) || 0;
+            const purchases2023 = parseInt(document.getElementById("purchases2023").value) || 0;
+            const purchases2024 = parseInt(document.getElementById("purchases2024").value) || 0;
+
+            const totalInvested = purchases2021 * prices[2021] + purchases2022 * prices[2022] + purchases2023 * prices[2023] + purchases2024 * prices[2024];
+            const totalShares = purchases2021 + purchases2022 + purchases2023 + purchases2024;
+
+            // Beräkna vinst
+            const totalValue = totalShares * prices[2024];
+            const profit = totalValue - totalInvested;
+            const profitAfterTax = profit * 0.7; // Efter vinstskatt på 30%
+
+            // Uppdatera resultat på sidan
+            document.getElementById("investmentResult").innerHTML = `
+                <p>Totalt Investering: ${totalInvested.toFixed(2)} kr</p>
+                <p>Total Vinst: ${profit.toFixed(2)} kr</p>
+                <p>Vinst efter skatt (30%): ${profitAfterTax.toFixed(2)} kr</p>
+            `;
+
+            // Skapa grafen för aktiekurs
+            const stockChart = document.getElementById('stockChart').getContext('2d');
+            const chartData = {
+                labels: ['2021', '2022', '2023', '2024'],
+                datasets: [{
+                    label: 'Aktiekurs',
+                    data: [prices[2021], prices[2022], prices[2023], prices[2024]],
+                    backgroundColor: 'rgba(0, 156, 222, 0.2)',
+                    borderColor: 'rgba(0, 156, 222, 1)',
+                    borderWidth: 2
+                }]
+            };
+            new Chart(stockChart, {
+                type: 'line',
+                data: chartData,
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: false
+                        }
+                    }
+                }
+            });
+
+            // Skapa grafen för vinst
+            const profitChart = document.getElementById('profitChart').getContext('2d');
+            const profitData = {
+                labels: ['2021', '2022', '2023', '2024'],
+                datasets: [{
+                    label: 'Vinst efter skatt',
+                    data: [
+                        (purchases2021 * prices[2021] - purchases2021 * prices[2021]) * 0.7,
+                        (purchases2022 * prices[2022] - purchases2022 * prices[2022]) * 0.7,
+                        (purchases2023 * prices[2023] - purchases2023 * prices[2023]) * 0.7,
+                        profitAfterTax
+                    ],
+                    backgroundColor: 'rgba(39, 174, 96, 0.2)',
+                    borderColor: 'rgba(39, 174, 96, 1)',
+                    borderWidth: 2
+                }]
+            };
+            new Chart(profitChart, {
+                type: 'line',
+                data: profitData,
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: false
+                        }
+                    }
+                }
+            });
+        }
+    </script>
+
 </body>
 </html>
+
