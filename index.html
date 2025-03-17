@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aktiekurs Historik & Beräkning</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- För att skapa grafer -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        canvas {
+            max-width: 100%;
+        }
+        input, button {
+            padding: 10px;
+            margin: 10px;
+            font-size: 16px;
+        }
+        .result {
+            font-weight: bold;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Aktiekurs Historik & Beräkning</h1>
+
+    <h3>Aktiekurs för åren 2021 till 2024:</h3>
+    <canvas id="stockChart"></canvas>
+
+    <div>
+        <h3>Beräkna Investering & Vinst</h3>
+        <label for="purchases2021">Köp 2021 (antal aktier):</label>
+        <input type="number" id="purchases2021" value="0">
+        <label for="purchases2022">Köp 2022 (antal aktier):</label>
+        <input type="number" id="purchases2022" value="0">
+        <label for="purchases2023">Köp 2023 (antal aktier):</label>
+        <input type="number" id="purchases2023" value="0">
+        <label for="purchases2024">Köp 2024 (antal aktier):</label>
+        <input type="number" id="purchases2024" value="0">
+        <button onclick="calculateInvestment()">Beräkna Totalt Investering och Vinst</button>
+    </div>
+
+    <div class="result" id="investmentResult"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>
