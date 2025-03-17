@@ -5,43 +5,97 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aktieberäkning</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .input-field {
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        label {
+            font-size: 16px;
+        }
+        input[type="number"] {
+            padding: 8px;
+            font-size: 16px;
+            width: 40%;
+        }
+        button {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+        canvas {
+            max-width: 100%;
+            margin-top: 30px;
+            height: 300px; /* Justerat storlek på grafen */
+        }
+    </style>
 </head>
 <body>
 
     <h1>Aktieberäkning</h1>
 
-    <div>
-        <label for="purchases2021">Köp 2021 (antal aktier):</label>
-        <input type="number" id="purchases2021" placeholder="Antal aktier 2021">
+    <div class="container">
+        <div class="input-field">
+            <label for="purchases2021">Köp 2021 (antal aktier):</label>
+            <input type="number" id="purchases2021" placeholder="Antal aktier 2021">
+        </div>
+
+        <div class="input-field">
+            <label for="purchases2022">Köp 2022 (antal aktier):</label>
+            <input type="number" id="purchases2022" placeholder="Antal aktier 2022">
+        </div>
+
+        <div class="input-field">
+            <label for="purchases2023">Köp 2023 (antal aktier):</label>
+            <input type="number" id="purchases2023" placeholder="Antal aktier 2023">
+        </div>
+
+        <div class="input-field">
+            <label for="purchases2024">Köp 2024 (antal aktier):</label>
+            <input type="number" id="purchases2024" placeholder="Antal aktier 2024">
+        </div>
+
+        <button onclick="calculateInvestment()">Beräkna Totalt Investering och Vinst</button>
+
+        <div class="result" id="investmentResult">
+            <!-- Resultatet av beräkningen kommer att visas här -->
+        </div>
+
+        <h2>Graf för aktiekurs (2021–2024)</h2>
+        <canvas id="stockChart"></canvas>
     </div>
-
-    <div>
-        <label for="purchases2022">Köp 2022 (antal aktier):</label>
-        <input type="number" id="purchases2022" placeholder="Antal aktier 2022">
-    </div>
-
-    <div>
-        <label for="purchases2023">Köp 2023 (antal aktier):</label>
-        <input type="number" id="purchases2023" placeholder="Antal aktier 2023">
-    </div>
-
-    <div>
-        <label for="purchases2024">Köp 2024 (antal aktier):</label>
-        <input type="number" id="purchases2024" placeholder="Antal aktier 2024">
-    </div>
-
-    <button onclick="calculateInvestment()">Beräkna Totalt Investering och Vinst</button>
-
-    <div id="investmentResult">
-        <!-- Resultatet av beräkningen kommer att visas här -->
-    </div>
-
-    <h2>Graf för aktiekurs (2021–2024)</h2>
-    <canvas id="stockChart" width="400" height="200"></canvas>
-
-    <h2>Graf för vinst (2021–2024)</h2>
-    <canvas id="profitChart" width="400" height="200"></canvas>
 
     <script>
         // Prisdata för åren
@@ -94,36 +148,8 @@
                         y: {
                             beginAtZero: false
                         }
-                    }
-                }
-            });
-
-            // Skapa grafen för vinst
-            const profitChart = document.getElementById('profitChart').getContext('2d');
-            const profitData = {
-                labels: ['2021', '2022', '2023', '2024'],
-                datasets: [{
-                    label: 'Vinst efter skatt',
-                    data: [
-                        (purchases2021 * prices[2021] - purchases2021 * prices[2021]) * 0.7,
-                        (purchases2022 * prices[2022] - purchases2022 * prices[2022]) * 0.7,
-                        (purchases2023 * prices[2023] - purchases2023 * prices[2023]) * 0.7,
-                        profitAfterTax
-                    ],
-                    backgroundColor: 'rgba(39, 174, 96, 0.2)',
-                    borderColor: 'rgba(39, 174, 96, 1)',
-                    borderWidth: 2
-                }]
-            };
-            new Chart(profitChart, {
-                type: 'line',
-                data: profitData,
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: false
-                        }
-                    }
+                    },
+                    responsive: true
                 }
             });
         }
@@ -131,4 +157,3 @@
 
 </body>
 </html>
-
